@@ -42,15 +42,6 @@ pipeline{
 
 		stage('aws creadentials'){
 			  steps {
-			  
-			//   withCredentials([[
-   			// 		$class: 'AmazonWebServicesCredentialsBinding',
-   			// 		credentialsId: "eks-credentials",
-   			// 		accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-   			// 		secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-			// 	]]) {
-   			// 		 // AWS Code
-			// 	}
 			  withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
 
 
@@ -74,7 +65,7 @@ pipeline{
 				sh 'echo Hello World'
 				sh 'kubectl get pods'
                 // sh "sed -i 's/hellonodejs:latest/hellonodejs:eks/g' deploy.yaml"
-                // sh 'kubectl apply -f deploy.yaml'
+                sh 'kubectl apply -f eks-deployment.yaml'
                 // sh 'kubectl rollout restart deployment hello-world-nodejs'
 			}
 		}
