@@ -2,11 +2,11 @@
 pipeline{
 
 	 environment {
-    	registry = "tongzahub/eks-jenkins-demo"
-    	registryCredential = 'docker-user-pass'
+    	registry = "flukyholy/devoptest"
+    	registryCredential = 'dockerhub-flukky'
     	dockerImage = ''
 		region = "ap-southeast-1"
-		clusterName  = "arthit-devops-labs"
+		clusterName  = "flukky-lab"
   	}
 
 	agent any
@@ -14,31 +14,31 @@ pipeline{
 	stages {
 
 
-		// stage('Build') {
-		// 	steps {
-		// 	script {
-        //  		 dockerImage = docker.build registry + ":$BUILD_NUMBER"
-       	// 	 }   
-		// 	}
-		// }
+		stage('Build') {
+			steps {
+			script {
+         		 dockerImage = docker.build registry + ":$BUILD_NUMBER"
+       		 }   
+			}
+		}
   
 
-		// stage('Push image') {
-		// 	steps {
-		// 		 script {
-        //     		docker.withRegistry( '', registryCredential ) {
-        //    			dockerImage.push()
-        //  		 }
-		// 	}
-		// }
+		stage('Push image') {
+			steps {
+				 script {
+            		docker.withRegistry( '', registryCredential ) {
+           			dockerImage.push()
+         		 }
+			}
+		}
 
-		// }
+		}
         
-		// stage('Remove Unused docker image') {
-     	// 	 steps{
-        // 		sh "docker rmi $registry:$BUILD_NUMBER"
-     	//  	}
-   		// }
+		stage('Remove Unused docker image') {
+     		 steps{
+        		sh "docker rmi $registry:$BUILD_NUMBER"
+     	 	}
+   		}
 
 		stage('aws creadentials'){
 			  steps {
@@ -51,7 +51,7 @@ pipeline{
 			// 	]]) {
    			// 		 // AWS Code
 			// 	}
-			  withAWS(credentials: 'eks-credentials', region: 'ap-southeast-1') {
+			  withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
 
 
 				  sh "aws iam list-account-aliases"
