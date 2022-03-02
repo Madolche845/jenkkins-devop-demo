@@ -1,28 +1,21 @@
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eks-jenkins-demo
+  name: nginx-deployment
   labels:
-    app: eks-jenkins-demo
-  namespace: default
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: eks-jenkins-demo
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+      app: nginx
   template:
     metadata:
       labels:
-        app: eks-jenkins-demo
+        app: nginx
     spec:
       containers:
-      - image: flukyholy/devoptest
-        imagePullPolicy: Always
-        name: eks-jenkins-demo
+      - name: nginx
+        image: nginx:1.14.2
         ports:
-        - containerPort: 8080
-          protocol: TCP
+        - containerPort: 80
