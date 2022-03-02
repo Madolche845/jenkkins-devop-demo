@@ -59,17 +59,17 @@ pipeline{
 
 		}
 
-        // stage('eks deploy') {
+        stage('eks deploy') {
 
-		// 	steps {
-		// 		sh 'echo Hello World'
-		// 		sh 'kubectl get pods'
-        //         // sh "sed -i 's/hellonodejs:latest/hellonodejs:eks/g' deploy.yaml"
-        //         sh 'kubectl apply -f eks-deployment.yaml'
-		// 		sh 'kubectl get deployment'
-        //         // sh 'kubectl rollout restart deployment hello-world-nodejs'
-		// 	}
-		// }
+			steps {
+				sh 'echo Hello World'
+				sh 'kubectl get pods'
+                // sh "sed -i 's/hellonodejs:latest/hellonodejs:eks/g' deploy.yaml"
+                sh 'kubectl apply -f eks-deployment.yaml'
+				sh 'kubectl get deployment'
+                // sh 'kubectl rollout restart deployment hello-world-nodejs'
+			}
+		}
 		stage('eks deploy') {
 			steps {
                 sh 'kubectl delete -f eks-deployment.yaml'
