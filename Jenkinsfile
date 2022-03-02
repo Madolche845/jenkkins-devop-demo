@@ -70,7 +70,7 @@ pipeline{
                 // sh 'kubectl rollout restart deployment hello-world-nodejs'
 			}
 		}
-		stage('eks deploy') {
+		stage('eks delete') {
 			steps {
                 sh 'kubectl delete -f eks-deployment.yaml'
 			}
