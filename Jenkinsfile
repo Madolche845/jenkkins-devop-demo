@@ -59,7 +59,7 @@ pipeline{
 				sh "aws eks --region $region update-kubeconfig --name $clusterName"
 				sh 'echo Hello World'
 				sh 'kubectl get pods'
-                sh 'kubectl apply -f eks-deployment.yaml'
+                sh 'kubectl apply -f eks-deployment-my.yaml'
 				sh 'kubectl get deployment'
 				}
 			}
@@ -68,7 +68,7 @@ pipeline{
 			steps {
 				withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
 				sh "aws eks --region $region update-kubeconfig --name $clusterName"
-                sh 'kubectl delete -f eks-deployment.yaml'
+                sh 'kubectl delete -f eks-deployment-my.yaml'
 				}
 			}
 		}

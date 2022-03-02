@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-jenkins-demo
+  labels:
+    app: eks-jenkins-demo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eks-jenkins-demo
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: eks-jenkins-demo
+    spec:
+      containers:
+      - image: flukyholy/devoptest:LASTEST
+        imagePullPolicy: Always
+        name: eks-jenkins-demo
+        ports:
+        - containerPort: 8080
+          protocol: TCP
