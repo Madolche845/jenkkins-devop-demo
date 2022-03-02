@@ -41,36 +41,35 @@ pipeline{
    		}
 
 		stage('aws creadentials'){
-			  steps {
+			steps {
 			  withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
-
-
 				  sh "aws iam list-account-aliases"
 				  sh "aws eks --region $region update-kubeconfig --name $clusterName"
-
-				//   sh "cp /var/lib/jenkins/.kube/config  /home/ubuntu/.kube/config"
-
 				  sh 'kubectl get pods'
-				   sh 'kubectl get nodes'
+				  sh 'kubectl get nodes'
 				  
 			  }
-
-			  }
-
+			}
 		}
 
         stage('eks deploy') {
 
 			steps {
+				withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
+				sh "aws eks --region $region update-kubeconfig --name $clusterName"
 				sh 'echo Hello World'
 				sh 'kubectl get pods'
                 sh 'kubectl apply -f eks-deployment.yaml'
 				sh 'kubectl get deployment'
+				}
 			}
 		}
 		stage('eks delete') {
 			steps {
+				withAWS(credentials: 'aws-flukky', region: 'ap-southeast-1') {
+				sh "aws eks --region $region update-kubeconfig --name $clusterName"
                 sh 'kubectl delete -f eks-deployment.yaml'
+				}
 			}
 		}
 	}
